@@ -22,5 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('alldata/',views.alldata,name='alldata'),
     # path('singledata/',views.singledata,name='singledata'),
-    path('createdata/',views.createdata,name='createdata'),
+    # path('createdata/<int:pk>/',views.createdata,name='createdata'),
+    path('deletedata/<int:pk>/',views.deletedata,name='deletedata'),
+
 ]
