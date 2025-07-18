@@ -71,15 +71,50 @@ from django.views.decorators.csrf import csrf_exempt
 #         json_data=JSONRenderer().render(x.errors)
 #         return HttpResponse(json_data,content_type='application/json')
 
-@csrf_exempt
-def deletedata(request,pk):
-    if request.method=="DELETE":
+# @csrf_exempt
+# def deletedata(request,pk):
+#     if request.method=="DELETE":
+#         json_data=request.body
+#         stream=io.BytesIO(json_data)
+#         old_data=Student.objects.get(id=pk)
+#         old_data.delete()
+#         msg="data deleted"
+#         json_data=JSONRenderer().render(msg)
+#         return HttpResponse(json_data,content_type="application/json")
+        
+def student_api(request):
+    if request.method=="GET":
+        
+          json_data=request.body
+          if json_data:
+            stream=io.BytesIO(json_data)
+            python_data=JSONParser().parse(stream)
+            x=python_data['id']
+            data=Student.objects.filter(id=x)
+            if data:
+               data1=StudentSerializer(data)
+               return JsonResponse(data1.data)
+            else:
+               msg={'msg':"id dosent exist"}
+               return JsonResponse(msg)
+          else:
+            stu_all=Student.objects.all()
+            data1=StudentSerializer(stu_all,many=True)
+            return JsonResponse(data1.data,safe=False)
+    elif request.method=="POST":
         json_data=request.body
         stream=io.BytesIO(json_data)
-        old_data=Student.objects.get(id=pk)
-        old_data.delete()
-        msg="data deleted"
-        json_data=JSONRenderer().render(msg)
-        return HttpResponse(json_data,content_type="application/json")
-        
+        python_data=JSONParser().parse(stream)
+        data1=StudentSerializer(data=python_data)
+        if data1.is_valid():
+            data1.save()
+            msg="Data created successfully"
+            json_data=JSONRenderer().render(msg)
+            return HttpResponse(json_data,content_type='application/json')
+
+        json_data=JSONRenderer().render(data1.errors)
+        return HttpResponse(json_data,content_type='application/json')
+            
+    
+    
         

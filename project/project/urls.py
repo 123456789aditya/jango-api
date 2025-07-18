@@ -23,6 +23,7 @@ urlpatterns = [
     # path('alldata/',views.alldata,name='alldata'),
     # path('singledata/',views.singledata,name='singledata'),
     # path('createdata/<int:pk>/',views.createdata,name='createdata'),
-    path('deletedata/<int:pk>/',views.deletedata,name='deletedata'),
+    # path('deletedata/<int:pk>/',views.deletedata,name='deletedata'),
+    path('student_api/',views.student_api,name='student_api'),
 
 ]
