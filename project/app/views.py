@@ -81,10 +81,10 @@ from django.views.decorators.csrf import csrf_exempt
 #         msg="data deleted"
 #         json_data=JSONRenderer().render(msg)
 #         return HttpResponse(json_data,content_type="application/json")
-        
+
+@csrf_exempt        
 def student_api(request):
     if request.method=="GET":
-        
           json_data=request.body
           if json_data:
             stream=io.BytesIO(json_data)
@@ -92,6 +92,7 @@ def student_api(request):
             x=python_data['id']
             data=Student.objects.filter(id=x)
             if data:
+               data = Student.objects.get(id=x)
                data1=StudentSerializer(data)
                return JsonResponse(data1.data)
             else:
@@ -114,6 +115,16 @@ def student_api(request):
 
         json_data=JSONRenderer().render(data1.errors)
         return HttpResponse(json_data,content_type='application/json')
+    elif request.method=="DELETE":
+        json_data=request.body
+        if json_data:
+          pass 
+        else:
+          message={"msg":"idrequired"}
+          return JsonResponse(message)
+      
+      
+      
             
     
     
