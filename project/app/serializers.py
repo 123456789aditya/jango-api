@@ -19,7 +19,7 @@ from .models import Student
 #         instance.save()
 #         return instance
     
-class StudentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Student
-        fields='__all__'
+# class StudentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=Student
+#         fields='__all__'
